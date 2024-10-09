@@ -1,0 +1,81 @@
+vm-student on virtualbox
+Импорт ova образа в Virtualbox
+Работа с base-image Virtualbox
+Проверка параметров сети
+Запуск vm
+Доступное ПО
+Работа с vm
+Подключение по ssh
+Подключение к БД postgresql
+Подключение к веб серверу nginx
+Импорт ova образа в Virtualbox
+через консольный клиент *vboxmanage* установим директорию для хранения файлов vm-virtualbox для пользователя :
+example command
+команда для выполнения из консоли:
+vboxmanage setproperty machinefolder $HOME/goinfre/virtualbox-vm
+запускаем приложение Virtualbox
+в меню File-Preferences , параметр Default Machine Folder проверяем путь до директории хранения файлов vm-virtualbox
+в меню File запускаем Import Appliance :
+в параметре выбора файлов образа, указываем путь до .ova образа :
+example path
+путь до образа:
+/opt/source21/image-vm/base-image.ova
+проверить настройки виртуальной машины
+при необходимости параметры виртуальной машины можно поменять:
+Name -- имя vm в virtulbox
+RAM -- количество оперативной памяти для vm в virtulbox
+Virtual Disk Image -- имя образа виртуального жесткого диска .vdi
+импорт образа .ova
+Работа с base-image Virtualbox
+Проверка параметров сети
+перед vm проверяем/изменяем параметры сетевой связанности, в меню vm Settings-Network
+проверяем конфигурацию Adapter 1 , тип подключения NAT
+параметры Port Forwarding прописаны проброс портов arm-host , vm-student
+Запуск vm
+Запустить импортированный образ и подождать запуска vm :
+example
+после приглашения шелла vm-student запущенны и доступна для работы:
+Доступное ПО
+К работе на ВМ доступно следующее программное обеспечение:
+docker
+dockle
+Postgresql
+nginx
+Работа с vm
+Подключение по ssh
+Подключение доступно по порту 2222 на localhost пользователь student :
+example command
+команда для подключения по ssh :
+ssh -p 2222
+ student@localhost
+при успешном подключении потребует пароль student :
+drobottest@arm-stage1:~$ ssh -p 2222 student@localhost
+student@localhost's password:
+Linux vm-student 5.10.0-21-amd64 #1 SMP Debian 5.10.162-1 (2023-01-21) x86_64
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon May 15 18:15:44 2023 from 10.0.2.2
+student@vm-student:~$
+(на `vm-student` можно прокинуть связку ключей для удобства работы)
+(на `vm-student` доступно повышение прав привилегий через `sudo`)
+Подключение к БД postgresql
+Подключение доступно по порту 15432 на localhost :
+example
+пример подключение через приложение `dbeaver`:
+креды для тестового подключения:
+database : `testdb`,
+username: `test`,
+password: `test`.
+так же доступно из через консольный клиет на vm psql :
+root@vm-student:/home/student# su postgres
+postgres@vm-student:/home/student$ psql
+psql (14.7 (Debian 14.7-1.pgdg110+1))
+Type "help" for help.
+postgres=#
+Подключение к веб серверу nginx
+Подключение доступно по порту 18080 на localhost :
+example
+пример доступности вебсервера:
